@@ -45,6 +45,23 @@ def db_delete_table_pyscopg():
     if cursor:
         cursor.close()
 
+def marketing_recommendation(df,self):
+    interpretation = "Based on the user overview analysis, the marketing team should focus on:"
+    
+    # Top handsets
+    top_handsets_list = top_handsets(df).index.tolist()
+    interpretation += f"\n- Promoting the top handsets: {', '.join(top_handsets_list)}"
+
+    # Top manufacturers
+    top_manufacturers_list = top_manufacturers(df).index.tolist()
+    interpretation += f"\n- Collaborating with the top manufacturers: {', '.join(top_manufacturers_list)}"
+
+    # Top handsets per manufacturer
+    for manufacturer in top_manufacturers_list:
+        top_handsets_list = top_handsets_per_manufacturer(df, manufacturer).index.tolist()
+        interpretation += f"\n- Highlighting top handsets for {manufacturer}: {', '.join(top_handsets_list)}"
+
+    return interpretation
 
 
 
